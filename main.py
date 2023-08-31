@@ -1,7 +1,28 @@
 import tkinter as tk
 from tkinter import *
 
-root = Tk()
+from brush_settings import BrushSettings
+from paint_and_erase import PaintAndErase
+
+# primary functionality / class for the paint application
+class BasicPaintApp:
+    def __init__(self, root):
+        self.root()
+        self.root.title("(Basic) Paint App")
+        self.root.geometry("700x700")
+    
+        self.canvas = tk.Canvas(root, bg="white")
+        self.canvas.pack(fill="both", expand=True)
+
+# main
+if __name__ == "__main__":
+    root = Tk()
+    app = BasicPaintApp(root)
+    root.mainloop()
+
+
+
+""" root = Tk()
 root.title("(Basic) Paint App")
 root.geometry("700x700")
 
@@ -49,5 +70,5 @@ def erase(event):
     canvas.create_oval(x-2, y-2, x+2, y+2, fill="white", outline="white", width=brush_width)
 
 canvas.bind("<B3-Motion>", erase)
-
+ """
 root.mainloop()
