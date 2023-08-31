@@ -1,30 +1,53 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter.colorchooser import askcolor
+from tkinter import *
 
-root = tk.Tk()
-root.title("Paint App")
+root = Tk()
+root.title("(Basic) Paint App")
+root.geometry("700x700")
 
 canvas = tk.Canvas(root, bg="white")
 canvas.pack(fill="both", expand=True)
 
+brush_size_label = Label(root, text="Brush Size: ")
+brush_size_label.pack()
+
+# Dropdown menu options
+brush_width = 3
+def brush_selection(selection):
+        global brush_width
+        brush_width = selection
+
+brush_sizes = [
+    1,
+    2,
+    3,
+    4,
+    5, 
+    6,
+    7,
+    8,
+    9,
+    10
+]
+  
+# datatype of menu text
+clicked = IntVar()
+clicked.set(brush_width)
+
+# Create Dropdown menu
+drop = OptionMenu(root, clicked, *brush_sizes, command=brush_selection)
+drop.pack()
+
 def paint(event):
     x, y = event.x, event.y
-    canvas.create_oval(x-2, y-2, x+2, y+2, fill="black", width=2)
+    canvas.create_oval(x-2, y-2, x+2, y+2, fill="black", width=brush_width)
 
 canvas.bind("<B1-Motion>", paint)
 
-def choose_color():
-    color = askcolor(color="black")[1]
-    canvas["bg"] = color
+def erase(event):
+    x, y = event.x, event.y
+    canvas.create_oval(x-2, y-2, x+2, y+2, fill="white", outline="white", width=brush_width)
 
-color_button = ttk.Button(root, text="Choose Color", command=choose_color)
-color_button.pack()
-
-def clear_canvas():
-    canvas.delete("all")
-
-clear_button = ttk.Button(root, text="Clear Canvas", command=clear_canvas)
-clear_button.pack()
+canvas.bind("<B3-Motion>", erase)
 
 root.mainloop()
