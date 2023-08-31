@@ -14,6 +14,13 @@ class BasicPaintApp:
         self.canvas = tk.Canvas(root, bg="white")
         self.canvas.pack(fill="both", expand=True)
 
+        # from the imported classes
+        self.brush_settings = BrushSettings()
+        self.paint_and_erase = PaintAndErase(self.canvas, self.brush_settings)
+
+        brush_size_label = Label(root, text="Brush Size: ")
+        brush_size_label.pack()
+
 # main
 if __name__ == "__main__":
     root = Tk()
