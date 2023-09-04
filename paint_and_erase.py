@@ -1,5 +1,3 @@
-from brush_settings import BrushSettings
-
 # class for the logic behind the paintbrush and eraser
 class PaintAndErase:
     """
