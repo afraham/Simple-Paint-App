@@ -6,17 +6,24 @@ from paint_and_erase import PaintAndErase
 
 # primary functionality / class for the paint application
 class BasicPaintApp:
+    
     def __init__(self, root):
         self.root = root
         self.root.title("(Basic) Paint App")
         self.root.geometry("700x700")
-    
+
         self.canvas = tk.Canvas(root, bg="white")
         self.canvas.pack(fill="both", expand=True)
 
         # from the imported classes
         self.brush_settings = BrushSettings()
         self.paint_and_erase = PaintAndErase(self.canvas, self.brush_settings)
+
+        # Add a button to switch between paintbrush and eraser
+        self.mode_button = Button(root, text="Switch to Eraser", command=self.toggle_mode)
+        self.mode_button.pack()
+        self.current_mode = 0
+        self.canvas.bind("<B1-Motion>", self.paint_and_erase.paint)
 
         brush_sizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -30,19 +37,19 @@ class BasicPaintApp:
         drop_brush = OptionMenu(self.root, clicked_brush, *brush_sizes, command=self.brush_settings.change_brush_size)
         drop_brush.pack()
 
-        self.canvas.bind("<B1-Motion>", self.paint_and_erase.paint)
 
-        # eraser size label
-        eraser_size_label = Label(root, text="Eraser Size: ")
-        eraser_size_label.pack()
-
-        clicked_erase = IntVar()
-        clicked_erase.set(self.brush_settings.erase_size)
-
-        drop_eraser = OptionMenu(self.root, clicked_erase, *brush_sizes, command=self.brush_settings.change_erase_size)
-        drop_eraser.pack()
-
-        self.canvas.bind("<B3-Motion>", self.paint_and_erase.erase)
+    def toggle_mode(self):
+        """
+        Toggle between the paintbrush and eraser modes.
+        """
+        if self.current_mode == 0:
+            self.mode_button.config(text="Paintbrush")
+            self.current_mode = 1
+    
+            self.brush_settings.change_brush_colour("white")
+        else:
+            self.mode_button.config(text="Eraser")
+            self.current_mode = 0
 
 # main
 if __name__ == "__main__":

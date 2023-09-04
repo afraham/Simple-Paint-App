@@ -9,7 +9,6 @@ class BrushSettings:
         Initialize brush settings with default values.
         """
         self.brush_size = 3
-        self.erase_size = 3
         self.paint_colour = "black"
     
     def change_brush_size(self, size):
@@ -19,14 +18,6 @@ class BrushSettings:
             size (int): new brush size
         """
         self.brush_size = size
-
-    def change_erase_size(self, size):
-        """
-        Changes the size of the eraser.
-        args:
-            size (int): new eraser size
-        """
-        self.erase_size = size
     
     def change_brush_colour(self, colour):
         """
